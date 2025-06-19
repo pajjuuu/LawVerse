@@ -10,6 +10,7 @@ class lawyers(models.Model):
         if not self.pk and not self.name.startswith("Adv."):
             self.name = f"Adv. {self.name.strip()}"
         super().save(*args, **kwargs)
+
     GENDER_CHOICES = [
     ('M', 'Male'),
     ('F', 'Female'),
@@ -19,15 +20,17 @@ class lawyers(models.Model):
     gender = models.CharField(
     max_length=1,
     choices=GENDER_CHOICES,
-    default='O',
+    default='M',
     help_text="Select gender"
     )
-    photo = models.ImageField(upload_to='photos/')
+    
+    photo = models.ImageField(upload_to='photos')
     cases_solved = models.CharField(
     max_length=50,
     default="New Here",
     help_text="Number of cases solved or default status"
     )
+
     LOCATION_CHOICES = [
     ('Delhi', 'Delhi'),
     ('Mumbai', 'Mumbai'),
@@ -39,7 +42,6 @@ class lawyers(models.Model):
     ('Ahmedabad', 'Ahmedabad'),
     ('Jaipur', 'Jaipur'),
     ('Lucknow', 'Lucknow'),
-    
     ]
 
     location = models.CharField(
@@ -61,7 +63,10 @@ class lawyers(models.Model):
     ]
 
     languages = MultiSelectField(choices=LANGUAGE_CHOICES)
+    
     email = models.EmailField(unique=True)
+    
+    
     SPECIALIZATION_CHOICES = [
         ('CRIMINAL', 'Criminal'),
         ('CIVIL', 'Civil'),
